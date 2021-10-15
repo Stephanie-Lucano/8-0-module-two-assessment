@@ -11,21 +11,29 @@ fetch("https://ghibliapi.herokuapp.com/films/")
         })
 
         document.querySelector("#dropdown").addEventListener("change", (event) => {
+            event.preventDefault();    
+            const article = document.querySelector("#display-info article")  
+            if (article) {
+                article.remove();
+            }
             const selection = event.target.value
-            event.preventDefault();
             result.filter((movie) => {
                 if (event.target.value === movie.title) {
+                    const article = document.createElement("article")
+
                     const title = document.createElement("h3");
                     title.textContent = movie.title;
-                    document.querySelector("#display-info").append(title); 
+                    article.append(title); 
                     
                     const year = document.createElement("p");
                     year.textContent = movie.release_date;
-                    document.querySelector("#display-info").append(year);
+                    article.append(year);
     
                     const description = document.createElement("p");
                     description.textContent = movie.description ;
-                    document.querySelector("#display-info").append(description);
+                    article.append(description);
+
+                    document.querySelector("#display-info").append(article);
                 }
             })
 
@@ -43,6 +51,8 @@ fetch("https://ghibliapi.herokuapp.com/films/")
 
                 const textNode = document.createTextNode(` ${userInput}`)
                 strong.after(textNode);
+
+                document.querySelector("#review").value = "" 
             })
         })
     })
