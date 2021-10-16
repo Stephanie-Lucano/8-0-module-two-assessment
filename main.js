@@ -10,13 +10,12 @@ fetch("https://ghibliapi.herokuapp.com/films/")
             selection.append(option);
         })
 
-        document.querySelector("#dropdown").addEventListener("change", (event) => {
+        document.querySelector("#titles").addEventListener("change", (event) => {
             event.preventDefault();    
             const article = document.querySelector("#display-info article")  
             if (article) {
                 article.remove();
             }
-            const selection = event.target.value
             result.filter((movie) => {
                 if (event.target.value === movie.title) {
                     const article = document.createElement("article")
@@ -36,24 +35,25 @@ fetch("https://ghibliapi.herokuapp.com/films/")
                     document.querySelector("#display-info").append(article);
                 }
             })
+        })
 
-            document.querySelector("#leave-review").addEventListener("submit", (event) => {
-                event.preventDefault();
-                const userInput= event.target.review.value
-    
-                const unorderedList = document.querySelector("ul");
-                const listItem = document.createElement("li");
-                unorderedList.append(listItem);
+        document.querySelector("#leave-review").addEventListener("submit", (event) => {
+            event.preventDefault();
 
-                const strong = document.createElement("strong")
-                strong.textContent = `${selection}:`;
-                listItem.append(strong);
+            const userInput= event.target.review.value
 
-                const textNode = document.createTextNode(` ${userInput}`)
-                strong.after(textNode);
+            const unorderedList = document.querySelector("ul");
+            const listItem = document.createElement("li");
+            unorderedList.append(listItem);
 
-                document.querySelector("#review").value = "" 
-            })
+            const strong = document.createElement("strong")
+            strong.textContent = document.querySelector("#titles").value;
+            listItem.append(strong);
+
+            const textNode = document.createTextNode(` ${userInput}`)
+            strong.after(textNode);
+
+            document.querySelector("#review").value = "" 
         })
     })
     .catch((error) => {
